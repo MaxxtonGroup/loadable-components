@@ -143,10 +143,21 @@ function createLoadable({
           ((ctor.isReady && ctor.isReady(props)) ||
             // is ready - was loaded during SSR process
             (ctor.chunkName &&
-              LOADABLE_SHARED.initialChunks[ctor.chunkName(props)]))
+              LOADABLE_SHARED.initialChunks[ctor.chunkName(props)])) && this.isRequireSyncSuccessful()
         ) {
           this.loadSync()
         }
+      }
+
+      isRequireSyncSuccessful() {
+        try {
+          ctor.requireSync(this.props);
+          console.info("Obtaining sync possible!");
+        } catch (error) {
+        	console.info("Obtaining sync failed!");
+          return false;
+        }
+        return true;
       }
 
       componentDidMount() {
