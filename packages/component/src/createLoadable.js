@@ -152,9 +152,7 @@ function createLoadable({
       isRequireSyncSuccessful() {
         try {
           ctor.requireSync(this.props);
-          console.info("Obtaining sync possible!");
         } catch (error) {
-        	console.info("Obtaining sync failed!");
           return false;
         }
         return true;
